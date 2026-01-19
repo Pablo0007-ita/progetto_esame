@@ -16,21 +16,81 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# 🚚 GreenFleet Monitor — MVP Roadmap
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Questo documento definisce la tabella di marcia per l’MVP di **GreenFleet Monitor**, una piattaforma per monitorare mezzi, viaggi, consumi e ottimizzare le rotte tramite analisi statistiche e integrazioni esterne.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🎯 Obiettivo dell’MVP
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Realizzare un dashboard funzionante che permetta di:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- visualizzare mezzi e viaggi
+- analizzare i chilometri percorsi per destinazione
+- integrare dati meteo in tempo reale
+- fornire insight utili per l’ottimizzazione logistica
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧱 Architettura MVP
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Frontend:** Next.js (App Router), React, Tailwind CSS  
+- **Backend:** API Routes Next.js  
+- **Database:** MySQL  
+- **Integrazioni:** Open‑Meteo (geocoding + meteo attuale)  
+- **Linguaggio:** TypeScript  
+
+---
+
+## 🗂️ Roadmap MVP
+
+### ✔ Completato
+- Setup progetto Next.js + Tailwind  
+- Connessione MySQL e configurazione DB  
+- Tabella `mezzi` + inserimento tramite form  
+- Tabella `viaggi`  
+- API `/api/mezzi` (GET + POST)  
+- API `/api/viaggi` con aggregazione km per destinazione  
+- Integrazione meteo Open‑Meteo per ogni destinazione  
+- Refactor componenti base  
+
+---
+
+### 🚧 In corso
+- Dashboard con sidebar e navigazione modulare  
+- KPI principali (km totali, consumi, media km/l)  
+- Miglioramento UI tabelle e layout responsive  
+- Caching meteo per ridurre chiamate API  
+
+---
+
+### 📅 Da implementare
+- Grafici (Chart.js) per analisi visive  
+- Filtri avanzati (mezzo, data, destinazione)  
+- Calcolo costi carburante  
+- Autenticazione utenti (NextAuth)  
+- Ruoli e permessi (admin / operatore)  
+- Deploy su Vercel  
+- Documentazione API completa  
+
+---
+
+## 📊 KPI previsti nell’MVP
+
+- Totale km percorsi  
+- Km per destinazione  
+- Consumo medio (km/l)  
+- Litri totali consumati  
+- Meteo destinazioni (supporto decisionale)  
+
+---
+
+## 📝 Note tecniche
+
+- Le API sono implementate tramite route handlers (`app/api/.../route.ts`)  
+- Il meteo viene caricato client‑side per evitare rate limit  
+- Possibile ottimizzazione futura: caching server-side  
+- Struttura modulare per facilitare estensioni future  
+
+---
