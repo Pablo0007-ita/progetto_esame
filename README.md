@@ -16,9 +16,9 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-# 🚚 GreenFleet Monitor — MVP Roadmap
+# 🚚 progetto_esame Monitor — MVP Roadmap
 
-Questo documento definisce la tabella di marcia per l’MVP di **GreenFleet Monitor**, una piattaforma per monitorare mezzi, viaggi, consumi e ottimizzare le rotte tramite analisi statistiche e integrazioni esterne.
+Questo documento definisce la tabella di marcia per l’MVP di **progetto solar**, una piattaforma per monitorare mezzi, viaggi, consumi e ottimizzare le rotte tramite analisi statistiche e integrazioni esterne.
 
 ---
 
@@ -26,7 +26,7 @@ Questo documento definisce la tabella di marcia per l’MVP di **GreenFleet Moni
 
 Realizzare un dashboard funzionante che permetta di:
 
-- visualizzare mezzi e viaggi
+- visualizzare impianti e produzione
 - analizzare i chilometri percorsi per destinazione
 - integrare dati meteo in tempo reale
 - fornire insight utili per l’ottimizzazione logistica
@@ -48,10 +48,10 @@ Realizzare un dashboard funzionante che permetta di:
 ### ✔ Completato
 - Setup progetto Next.js + Tailwind  
 - Connessione MySQL e configurazione DB  
-- Tabella `mezzi` + inserimento tramite form  
-- Tabella `viaggi`  
-- API `/api/mezzi` (GET + POST)  
-- API `/api/viaggi` con aggregazione km per destinazione  
+- Tabella `impianti` + inserimento tramite form  
+- Tabella `produzione`  
+- API `/api/produzione` (GET + POST)  
+- API `/api/impianti` con aggregazione km per destinazione  
 - Integrazione meteo Open‑Meteo per ogni destinazione  
 - Refactor componenti base  
 
@@ -59,7 +59,7 @@ Realizzare un dashboard funzionante che permetta di:
 
 ### 🚧 In corso
 - Dashboard con sidebar e navigazione modulare  
-- KPI principali (km totali, consumi, media km/l)  
+- KPI principali ( consumi, media km/l)  
 - Miglioramento UI tabelle e layout responsive  
 - Caching meteo per ridurre chiamate API  
 

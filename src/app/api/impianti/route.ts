@@ -1,14 +1,31 @@
 import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
+
+
+// ======================================================
+// GET /api/impianti
+// Restituisce la lista degli impianti dal DB MySQL
+// ======================================================
 export async function GET() {
   try {
-    const [rows] = await db.query('SELECT * FROM mezzi');
+    // Query per recuperare tutti gli impianti
+    const [rows] = await db.query(`
+      SELECT id, nome_parco, latitudine, longitudine, capacita_max_kw
+      FROM impianti
+      ORDER BY nome_parco ASC
+    `);
+
     return NextResponse.json(rows);
   } catch (error) {
-    return NextResponse.json({ error: 'Errore nella query al database' }, { status: 500 });
+    console.error("Errore GET /api/impianti:", error);
+    return NextResponse.json(
+      { error: "Errore interno del server" },
+      { status: 500 }
+    );
   }
 }
+
 
 export async function POST(request: Request) {
   try {
