@@ -7,7 +7,7 @@ export default function ProduzioneDettaglio() {
   const params = useParams();
   const id = params.id as string;
 
-  const [produzione, setProduzione] = useState([]);
+  const [produzione, setProduzione] = useState<any[]>([]);
   const [nomeImpianto, setNomeImpianto] = useState("");
 
   // Form
@@ -15,18 +15,29 @@ export default function ProduzioneDettaglio() {
   const [kwh, setKwh] = useState("");
   const [ore, setOre] = useState("");
 
-  // Performance Ratio
+  // KPI
   const [prMedio, setPrMedio] = useState(0);
   const [ultimaDataGuasto, setUltimaDataGuasto] = useState<string | null>(null);
+  const [radiazione, setRadiazione] = useState(0);
+  const [allarme, setAllarme] = useState(false);
 
   async function load() {
-    // Produzione + PR
-    const res = await fetch(`/api/produzione?id_impianto=${id}`);
+    const res = await fetch(`/api/produzione?id_impianto=${id}`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      console.error("Errore API produzione");
+      return;
+    }
+
     const data = await res.json();
 
-    setProduzione(data.produzione);
-    setPrMedio(data.performance_ratio_medio);
-    setUltimaDataGuasto(data.ultima_data_guasto);
+    setProduzione(data.produzione ?? []);
+    setPrMedio(data.performance_ratio_medio ?? 0);
+    setUltimaDataGuasto(data.ultima_data_guasto ?? null);
+    setRadiazione(data.radiazione ?? 0);
+    setAllarme(data.allarme_guasto ?? false);
 
     // Nome impianto
     const resImp = await fetch(`/api/impianti`);
@@ -71,14 +82,21 @@ export default function ProduzioneDettaglio() {
   return (
     <div className="p-6 space-y-8">
       <h1 className="text-3xl font-bold">
-        Produzione Impianto  – {nomeImpianto}
+        Produzione Impianto – {nomeImpianto}
       </h1>
+
+      {/* ALLARME GUASTO */}
+      {allarme && (
+        <div className="bg-red-600 text-white p-4 rounded-lg shadow text-lg font-semibold">
+          ⚠️ Allarme Guasto: Radiazione alta ({radiazione} W/m²) ma produzione bassa
+        </div>
+      )}
 
       {/* PERFORMANCE RATIO */}
       <div className="bg-white shadow p-4 rounded-lg border mb-6">
         <h2 className="text-xl font-semibold mb-2">Performance Ratio</h2>
         <p className="text-3xl font-bold text-green-700">
-          {prMedio.toFixed(3)}
+          {Number(prMedio).toFixed(3)}
         </p>
 
         <p
@@ -102,6 +120,10 @@ export default function ProduzioneDettaglio() {
             Ultimo guasto rilevato il: {ultimaDataGuasto}
           </p>
         )}
+
+        <p className="mt-2 text-gray-700">
+          Radiazione solare oggi: <strong>{radiazione}</strong> W/m²
+        </p>
       </div>
 
       {/* FORM INSERIMENTO */}
@@ -171,7 +193,7 @@ export default function ProduzioneDettaglio() {
             </tr>
           </thead>
           <tbody>
-            {produzione.map((r: any) => (
+            {(produzione ?? []).map((r: any) => (
               <tr key={r.id} className="border-b hover:bg-gray-50">
                 <td className="px-4 py-3">{r.data}</td>
                 <td className="px-4 py-3">{r.kwh_prodotti}</td>

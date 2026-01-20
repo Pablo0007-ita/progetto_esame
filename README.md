@@ -27,9 +27,9 @@ Questo documento definisce la tabella di marcia per l’MVP di **progetto solar*
 Realizzare un dashboard funzionante che permetta di:
 
 - visualizzare impianti e produzione
-- analizzare i chilometri percorsi per destinazione
-- integrare dati meteo in tempo reale
-- fornire insight utili per l’ottimizzazione logistica
+- analizzare la produzione per ogni impianto
+- integrare dati meteo Open-Meteo (Solare):
+
 
 ---
 
@@ -58,19 +58,15 @@ Realizzare un dashboard funzionante che permetta di:
 ---
 
 ### 🚧 In corso
-- Dashboard con sidebar e navigazione modulare  
-- KPI principali ( consumi, media km/l)  
+- Dashboard con CARD che vanno alla singolo impianto  
+- KPI principali ( Kwh, ora_funzionamento)  
 - Miglioramento UI tabelle e layout responsive  
-- Caching meteo per ridurre chiamate API  
+- Caching meteo 
 
 ---
 
 ### 📅 Da implementare
-- Grafici (Chart.js) per analisi visive  
 - Filtri avanzati (mezzo, data, destinazione)  
-- Calcolo costi carburante  
-- Autenticazione utenti (NextAuth)  
-- Ruoli e permessi (admin / operatore)  
 - Deploy su Vercel  
 - Documentazione API completa  
 
@@ -78,11 +74,28 @@ Realizzare un dashboard funzionante che permetta di:
 
 ## 📊 KPI previsti nell’MVP
 
-- Totale km percorsi  
-- Km per destinazione  
-- Consumo medio (km/l)  
-- Litri totali consumati  
-- Meteo destinazioni (supporto decisionale)  
+1. Totale kWh prodotti
+Misura la quantità totale di energia generata da un impianto in un periodo.
+- Calcolo: somma di kwh_prodotti per impianto
+- Utilità: valutare la resa complessiva e confrontare impianti diversi
+
+2. Performance Ratio (PR)
+Indica l’efficienza dell’impianto rispetto al suo potenziale teorico.
+Formula adottata nell’MVP:
+PR=\frac{kWh\_ prodotti/ore\_ funzionamento}{capacita\_ max\_ kw}
+- PR alto (0.75–1.0) → impianto efficiente
+- PR medio (0.30–0.75) → produzione ridotta
+- PR basso (< 0.30) → possibile guasto o anomalia
+
+3. Radiazione solare (Open‑Meteo)
+Valore di irraggiamento giornaliero recuperato tramite API.
+- Serve per confrontare produzione vs potenziale solare
+- Se radiazione alta + PR basso → allarme guasto
+
+4. Ultima data di guasto
+Data dell’ultima rilevazione in cui il PR è sceso sotto la soglia critica.
+- Permette di monitorare la continuità operativa
+- Utile per manutenzione e diagnosi
 
 ---
 
